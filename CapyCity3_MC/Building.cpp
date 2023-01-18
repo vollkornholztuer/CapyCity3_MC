@@ -20,6 +20,7 @@ EmptySpace::EmptySpace() {
 //}
 
 WindPlant::WindPlant() {
+	this->label = 'W';
 	neededMaterial = std::map<Material, int>({
 		{Wood(), 2},
 		{Metal(), 1},
@@ -28,19 +29,19 @@ WindPlant::WindPlant() {
 }
 
 HydroPlant::HydroPlant() {
+	this->label = 'H';
 	neededMaterial = std::map<Material, int>({
 		{Wood(), 5},
 		{Metal(), 2}
-		});
-	this->label = 'H';
+		});	
 }
 
 SolarPlant::SolarPlant() {
+	this->label = 'S';
 	neededMaterial = std::map<Material, int>({
 		{Plastic(), 2},
 		{Metal(), 5}
 		});
-	this->label = 'S';
 }
 
 char Building::getLabel() {
