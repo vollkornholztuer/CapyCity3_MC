@@ -1,4 +1,5 @@
 #include "Material.h"
+#include <map>
 
 #pragma once
 class Building {
@@ -20,9 +21,7 @@ public:
 
 class WindPlant : public Building {
 public:
-    WindPlant() {
-
-    }
+    WindPlant();
 };
 
 class HydroPlant : public Building {

@@ -142,7 +142,7 @@ int CapycitySim::inputBuildingXCoordinate()
         return stoi(input);
     }
     else {
-        cout << "Eingabe ungültig" << endl;
+        cout << "Eingabe ungueltig" << endl;
         return inputBuildingXCoordinate();
     }
 }
@@ -207,7 +207,7 @@ void CapycitySim::showBuildArea()
     int countMetal = 0;
     int countPlastic = 0;
 
-    Material** materials;
+    /*Material** materials;*/ // evtl. nicht mehr gebraucht
     double totalCost = 0;
 
     for (int i = 0; i < length; i++) {
@@ -234,23 +234,27 @@ void CapycitySim::showBuildArea()
     // TODO: output prices
 
     // Berechnung Kosten
-    Material** hydroMaterials = HydroPlant().getNeededMaterial();
-    Material** windMaterials = WindPlant().getNeededMaterial();
-    Material** solarMaterials = SolarPlant().getNeededMaterial();
+    HydroPlant hydroPlant;
+    WindPlant windPlant;
+    SolarPlant solarPlant;
+    std::map<Material, int>& hydroMaterials = HydroPlant().getNeededMaterial();
+    std::map<Material, int>& windMaterials = WindPlant().getNeededMaterial();
+    std::map<Material, int>& solarMaterials = SolarPlant().getNeededMaterial();
+    std::map<Material, int>::iterator it;
 
     double hydroMaterialCost = 0;
-    for (int i = 0; i < sizeof(hydroMaterials) / sizeof(hydroMaterials[0]); i++) {
-        hydroMaterialCost += hydroMaterials[i]->getMaterialPrice();
+    for (auto& it : hydroPlant.neededMaterial){
+        hydroMaterialCost += it.first.getMaterialPrice() * it.second;
     }
 
     double windMaterialCost = 0;
-    for (int i = 0; i < sizeof(windMaterials) / sizeof(windMaterials[0]); i++) {
-        windMaterialCost += windMaterials[i]->getMaterialPrice();
+    for (auto& it : hydroPlant.neededMaterial) {
+        windMaterialCost += it.first.getMaterialPrice() + it.second;
     }
 
     double solarMaterialCost = 0;
-    for (int i = 0; i < sizeof(solarMaterials) / sizeof(solarMaterials[0]); i++) {
-        solarMaterialCost += solarMaterials[i]->getMaterialPrice();
+    for (auto& it : hydroPlant.neededMaterial) {
+        solarMaterialCost += it.first.getMaterialPrice() * it.second;
     }
 
     double hydroCost = countHydroPlant * (hydroMaterialCost + HydroPlant().getNetCost());
